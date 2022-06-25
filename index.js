@@ -32,7 +32,6 @@ const logger = winston.createLogger({
     ]
 });
 
-console.log(process.env.MONGO_URL);
 //Connect to mongoose atlas
 mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true }).
     then(() => { logger.info("info", "Connected to DB") }).
