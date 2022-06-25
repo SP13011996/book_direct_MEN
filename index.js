@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
 const booksRoute = require('./Server/Routes/bookroute')
+const path = require('path')
 
 const winston = require('winston')
 
@@ -13,8 +14,16 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }))
 
+
 //ROUTES
 app.use('/api/books', booksRoute);
+
+__dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "/frontend/build")))
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+})
 
 //CREATE A LOGGER
 const logger = winston.createLogger({
