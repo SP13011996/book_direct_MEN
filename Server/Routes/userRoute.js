@@ -4,7 +4,7 @@ const User = require('../Models/user.model')
 
 //UPDATE BOOK BASED ON ID
 router.put("/:userEmail", async (req, res) => {
-    console.log("BOOKS BOUGHT", req.body.booksbought);
+    //console.log("BOOKS BOUGHT", req.body.booksbought);
     const updatedBook = await User.updateOne({ email: req.params.userEmail }, {
         booksbought: req.body.booksbought,
     })

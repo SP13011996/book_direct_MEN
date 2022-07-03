@@ -24,7 +24,7 @@ router.post('/', async (req, res) => {
 
 
 
-    console.log(book);
+    //console.log(book);
     book.save().then(book => {
         res.send(book)
     }).catch(error => {

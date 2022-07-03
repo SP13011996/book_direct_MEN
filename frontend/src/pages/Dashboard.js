@@ -25,7 +25,7 @@ const Dashboard = () => {
 			},
 		})
 		const temp = await req.json()
-		console.log("Books data", temp);
+		//console.log("Books data", temp);
 		setBooksData(temp)
 	}
 
@@ -38,8 +38,8 @@ const Dashboard = () => {
 				localStorage.removeItem('token')
 				history.replace('/login')
 			} else {
-				console.log("TOKEN", jwt.decode(token));
-				console.log("LOGGED IN USR", temploggedinuser)
+				//console.log("TOKEN", jwt.decode(token));
+				//console.log("LOGGED IN USR", temploggedinuser)
 				populateBooksData()
 				setUser(temploggedinuser)
 			}
@@ -81,7 +81,7 @@ const Dashboard = () => {
 				booksbought: booksbought
 			})
 
-		console.log("AFTER DATA", req);
+		//console.log("AFTER DATA", req);
 		const token = localStorage.getItem('token')
 		if (token) {
 			const temploggedinuser = jwt.decode(token)

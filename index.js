@@ -34,7 +34,7 @@ app.get('*', (req, res) => {
 })
 
 app.post('/api/register', async (req, res) => {
-    console.log(req.body)
+    //console.log(req.body)
     try {
         const newPassword = await bcrypt.hash(req.body.password, 10)
         await User.create({

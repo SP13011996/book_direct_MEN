@@ -30,7 +30,7 @@ export default function ColumnTotalTable(props) {
     const classes = useStyles();
     let totalCost = 0;
 
-    console.log("Props", props);
+    //console.log("Props", props);
 
     // Finding the Total Cost
     rows.forEach((row) => (totalCost += row.price));

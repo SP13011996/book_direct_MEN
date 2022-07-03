@@ -13,12 +13,12 @@ const rowList = [];
 
 const getdata = async () => {
   const books = await axios.get('/api/books');
-  console.log(books);
+  //console.log(books);
   books.data.forEach(book => {
     rowList.push(<tr><td>{book.name}</td></tr>)
   });
 
-  console.log(rowList);
+  //console.log(rowList);
 
 };
 

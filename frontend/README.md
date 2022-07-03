@@ -3,10 +3,10 @@
 ## For books
 
 - [Books] : `GET https://afternoon-spire-92294.herokuapp.com/api/book/`
-- [Login] : `GET https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
-- [Login] : `PUT https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
-- [Login] : `POST https://afternoon-spire-92294.herokuapp.com/api/book/`
-- [Login] : `DELETE https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
+- [Books] : `GET https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
+- [Books] : `PUT https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
+- [Books] : `POST https://afternoon-spire-92294.herokuapp.com/api/book/`
+- [Books] : `DELETE https://afternoon-spire-92294.herokuapp.com/api/book/:bookId`
 
 ## URL
 
