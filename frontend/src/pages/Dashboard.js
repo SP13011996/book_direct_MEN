@@ -40,11 +40,9 @@ const Dashboard = () => {
 			} else {
 				console.log("TOKEN", jwt.decode(token));
 				console.log("LOGGED IN USR", temploggedinuser)
-				setUser(temploggedinuser)
 				populateBooksData()
+				setUser(temploggedinuser)
 			}
-			console.log("USER", loggedinuser);
-
 		}
 	}, [])
 
@@ -53,12 +51,26 @@ const Dashboard = () => {
 	const removeBook = async (id) => {
 		var booksbought = []
 		booksbought = loggedinuser.booksbought
-		booksbought.push(id)
+		booksbought.splice(booksbought, 1)
 		const req = await axios.put(`/api/user/${loggedinuser.email}`,
 			{
 				booksbought: booksbought
 			})
+		const token = localStorage.getItem('token')
+		if (token) {
+			const temploggedinuser = jwt.decode(token)
+			temploggedinuser.booksbought = booksbought
+
+			localStorage.removeItem('token')
+			const temptoken = jwt.sign(
+				temploggedinuser,
+				'secret123'
+			)
+			localStorage.setItem('token', temptoken)
+			setUser(temploggedinuser)
+		}
 	}
+
 
 	const addBook = async (id) => {
 		var booksbought = []
@@ -68,6 +80,21 @@ const Dashboard = () => {
 			{
 				booksbought: booksbought
 			})
+
+		console.log("AFTER DATA", req);
+		const token = localStorage.getItem('token')
+		if (token) {
+			const temploggedinuser = jwt.decode(token)
+			temploggedinuser.booksbought = booksbought
+
+			localStorage.removeItem('token')
+			const temptoken = jwt.sign(
+				temploggedinuser,
+				'secret123'
+			)
+			localStorage.setItem('token', temptoken)
+			setUser(temploggedinuser)
+		}
 	}
 
 
@@ -96,7 +123,7 @@ const Dashboard = () => {
 										<TableCell align="center">{row.name}</TableCell>
 										<TableCell align="center">{row.genre}</TableCell>
 										<TableCell align="center">{row.author.name}</TableCell>
-										<TableCell align="center">{row.price}</TableCell>
+										<TableCell align="center">{row.price ?? 0}</TableCell>
 										<TableCell align="center" ><Button onClick={() => removeBook(row._id)} variant="contained">Remove</Button></TableCell>
 
 									</TableRow>
@@ -108,7 +135,7 @@ const Dashboard = () => {
 										<TableCell align="center">{row.name}</TableCell>
 										<TableCell align="center">{row.genre}</TableCell>
 										<TableCell align="center">{row.author.name}</TableCell>
-										<TableCell align="center">{row.price}</TableCell>
+										<TableCell align="center">{row.price ?? 0}</TableCell>
 										<TableCell align="center" >< Button onClick={() => addBook(row._id)} variant="contained">Add</Button></TableCell>
 									</TableRow>
 								)
