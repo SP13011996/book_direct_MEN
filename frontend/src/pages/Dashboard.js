@@ -16,7 +16,7 @@ const Dashboard = () => {
 	const [bookdata, setBooksData] = useState([])
 
 	async function populateBooksData() {
-		const req = await fetch('3000/api/books', {
+		const req = await fetch('/api/books', {
 			headers: {
 				'x-access-token': localStorage.getItem('token'),
 			},
