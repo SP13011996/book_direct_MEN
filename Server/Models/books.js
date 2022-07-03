@@ -20,6 +20,10 @@ const BookSchema = new mongoose.Schema(
         },
         genre: {
             type: String, required: true, minlength: 3, maxlength: 20
+        },
+        price: {
+            type: Number, min: 10,
+            max: 100
         }
     }
 
@@ -31,7 +35,8 @@ const validate = book => {
         bookname: yup.string().required().min(3).max(50),
         authorname: yup.string().required().min(3).max(40),
         authorage: yup.number().required().min(10, 'Age must be greater than 10').max(100),
-        genre: yup.string().required().min(10).max(100)
+        genre: yup.string().required().min(10).max(100),
+        price: yup.number().required().min(10, 'price must be greater than 10').max(100),
     });
 
     return schema.validate(book).then(book => book).catch(error => { return { message: error.message } })

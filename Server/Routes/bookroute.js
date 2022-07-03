@@ -16,7 +16,8 @@ router.post('/', async (req, res) => {
             name: req.body.authorname,
             age: req.body.authorage
         },
-        genre: req.body.genre
+        genre: req.body.genre,
+        price: req.body.price
 
     });
 

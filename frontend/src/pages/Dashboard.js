@@ -8,12 +8,15 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
+import Button from '@material-ui/core/Button';
+const axios = require('axios');
 
 
 
 const Dashboard = () => {
 	const history = useHistory()
 	const [bookdata, setBooksData] = useState([])
+	const [loggedinuser, setUser] = useState({})
 
 	async function populateBooksData() {
 		const req = await fetch('/api/books', {
@@ -30,21 +33,49 @@ const Dashboard = () => {
 		populateBooksData()
 		const token = localStorage.getItem('token')
 		if (token) {
-			const user = jwt.decode(token)
-			if (!user) {
+			const temploggedinuser = jwt.decode(token)
+			if (!temploggedinuser) {
 				localStorage.removeItem('token')
 				history.replace('/login')
 			} else {
+				console.log("TOKEN", jwt.decode(token));
+				console.log("LOGGED IN USR", temploggedinuser)
+				setUser(temploggedinuser)
 				populateBooksData()
 			}
+			console.log("USER", loggedinuser);
+
 		}
 	}, [])
+
+
+
+	const removeBook = async (id) => {
+		var booksbought = []
+		booksbought = loggedinuser.booksbought
+		booksbought.push(id)
+		const req = await axios.put(`/api/user/${loggedinuser.email}`,
+			{
+				booksbought: booksbought
+			})
+	}
+
+	const addBook = async (id) => {
+		var booksbought = []
+		booksbought = loggedinuser.booksbought
+		booksbought.push(id)
+		const req = await axios.put(`/api/user/${loggedinuser.email}`,
+			{
+				booksbought: booksbought
+			})
+	}
 
 
 	return (
 		<div>
 			<TableContainer component={Paper}>
 				<Table aria-label="simple table">
+
 					<TableHead>
 						<TableRow>
 							<TableCell align="center">S.No</TableCell>
@@ -52,19 +83,39 @@ const Dashboard = () => {
 							<TableCell align="center">Genre</TableCell>
 							<TableCell align="center">Author</TableCell>
 							<TableCell align="center">Price&nbsp;($)</TableCell>
+							<TableCell align="center">Buy</TableCell>
 						</TableRow>
 					</TableHead>
 
-
 					<TableBody>
-						{bookdata.map((row, index) => (
-							<TableRow key={index}>
-								<TableCell align="center">{index + 1}</TableCell>
-								<TableCell align="center">{row.name}</TableCell>
-								<TableCell align="center">{row.genre}</TableCell>
-								<TableCell align="center">{row.author.name}</TableCell>
-							</TableRow>
-						))}
+						{bookdata.map((row, index) => {
+							if (loggedinuser.booksbought.includes(row._id))
+								return (
+									<TableRow key={index}>
+										<TableCell align="center">{index + 1}</TableCell>
+										<TableCell align="center">{row.name}</TableCell>
+										<TableCell align="center">{row.genre}</TableCell>
+										<TableCell align="center">{row.author.name}</TableCell>
+										<TableCell align="center">{row.price}</TableCell>
+										<TableCell align="center" ><Button onClick={() => removeBook(row._id)} variant="contained">Remove</Button></TableCell>
+
+									</TableRow>
+								)
+							else {
+								return (
+									<TableRow key={index}>
+										<TableCell align="center">{index + 1}</TableCell>
+										<TableCell align="center">{row.name}</TableCell>
+										<TableCell align="center">{row.genre}</TableCell>
+										<TableCell align="center">{row.author.name}</TableCell>
+										<TableCell align="center">{row.price}</TableCell>
+										<TableCell align="center" >< Button onClick={() => addBook(row._id)} variant="contained">Add</Button></TableCell>
+									</TableRow>
+								)
+							}
+						}
+
+						)}
 					</TableBody>
 
 				</Table>

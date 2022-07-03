@@ -11,5 +11,5 @@ const User = new mongoose.Schema(
 )
 
 const model = mongoose.model('UserData', User)
-
+//exports.User = model
 module.exports = model

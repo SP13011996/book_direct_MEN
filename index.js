@@ -7,6 +7,7 @@ const User = require('./Server/Models/user.model')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const cors = require('cors')
+const userRoute = require('./Server/Routes/userRoute')
 
 
 const winston = require('winston')
@@ -23,6 +24,7 @@ app.use(express.urlencoded({ extended: true }))
 
 //ROUTES
 app.use('/api/books', booksRoute);
+app.use('/api/user', userRoute);
 
 __dirname = path.resolve();
 app.use(express.static(path.join(__dirname, "/frontend/build")))
@@ -65,6 +67,7 @@ app.post('/api/login', async (req, res) => {
             {
                 name: user.name,
                 email: user.email,
+                booksbought: user.booksbought
             },
             'secret123'
         )
